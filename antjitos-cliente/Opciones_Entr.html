@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realizar o Recoger Pedido</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 10px 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: red;
+        }
+
+        .container {
+            display: flex;
+            margin: 100px auto;
+            max-width: 1200px;
+            gap: 20px;
+        }
+
+        .column {
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            flex: 1;
+        }
+
+        .column h2 {
+            margin-bottom: 10px;
+            color: red;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: #f4f4f4;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .option:hover {
+            background-color: #ddd;
+        }
+
+        .option input[type="radio"] {
+            margin-right: 10px;
+            accent-color: #333;
+        }
+
+        select, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Estilo del botón de siguiente */
+        .btn-siguiente {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 12px 20px;
+            background-color: red;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-siguiente:hover {
+            background-color: #cc0000;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Opciones de Pedido</h1>
+</header>
+
+
+<div class="container">
+    <!-- Primera columna -->
+    <div class="column">
+        <h2>Opciones</h2>
+        <div class="option">
+            <input type="radio" name="pedido" id="realizar-pedido" onclick="showDeliveryOptions()">
+            <label for="realizar-pedido">Realizar Pedido</label>
+        </div>
+        <div class="option">
+            <input type="radio" name="pedido" id="recoger-pedido" onclick="showPickupOptions()">
+            <label for="recoger-pedido">Recoger Pedido</label>
+        </div>
+    </div>
+
+    <!-- Segunda columna -->
+    <div class="column" id="details-column">
+        <h2>Detalles</h2>
+        <div id="delivery-options" class="hidden">
+            <label for="locality">Selecciona tu localidad:</label>
+            <select id="locality" onchange="loadStreets()">
+                <option value="">Selecciona una localidad</option>
+            </select>
+        
+            <label for="address">Dirección Exacta:</label>
+            <input type="text" id="address" placeholder="Ingresa tu dirección" onkeyup="showSuggestions()">
+            <div id="suggestions" style="border: 1px solid #ccc; border-radius: 5px; max-height: 200px; overflow-y: auto;"></div>
+
+        </div>
+        <div id="pickup-options" class="hidden">
+            <label for="schedule">Selecciona el horario:</label>
+            <select id="schedule">
+                <option value="">-- Selecciona --</option>
+                <option value="9:00 AM">9:00 AM</option>
+                <option value="12:00 PM">12:00 PM</option>
+                <option value="3:00 PM">3:00 PM</option>
+                <option value="6:00 PM">6:00 PM</option>
+            </select>
+        </div>
+
+        <!-- Botón de siguiente -->
+        <button class="btn-siguiente" onclick="saveToLocalStorage()">Siguiente</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        loadLocalities();
+    });
+
+    function loadLocalities() {
+    fetch('Buscar_Direccion.php')
+        .then(response => response.json())
+        .then(data => {
+            const localitySelect = document.getElementById('locality');
+            data.forEach(locality => {
+                const option = document.createElement('option');
+                option.value = locality.id; // Aquí usamos el ID
+                option.textContent = locality.nombre; // Aquí mostramos el nombre
+                localitySelect.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error('Error al cargar las localidades:', error);
+        });
+}
+
+function loadStreets() {
+    const localityId = document.getElementById('locality').value;
+    console.log("localityId:", localityId); // Esto debería imprimir el ID, no el nombre.
+
+    if (localityId) {
+        fetch(`buscar_Dire_Ecxc.php?locality=${localityId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    console.error('Error del servidor:', data.error);
+                } else {
+                    window.streets = data;
+                    console.log("Calles cargadas:", data); // Depuración
+                }
+            })
+            .catch(error => {
+                console.error('Error al cargar las calles:', error);
+            });
+    }
+}
+
+function showSuggestions() {
+    const input = document.getElementById('address').value.toLowerCase();
+    const suggestionsDiv = document.getElementById('suggestions');
+    suggestionsDiv.innerHTML = '';
+
+    if (input.length > 0 && window.streets) {
+        const filteredStreets = window.streets.filter(street =>
+            street.nombre_calle.toLowerCase().includes(input) ||
+            street.numero.toString().includes(input)
+        );
+
+        if (filteredStreets.length === 0) {
+            suggestionsDiv.innerHTML = '<div>No hay coincidencias</div>';
+        } else {
+            filteredStreets.forEach(street => {
+                const suggestion = document.createElement('div');
+                suggestion.textContent = `${street.nombre_calle}`;
+                suggestion.style.cursor = 'pointer';
+                suggestion.onclick = () => {
+                    document.getElementById('address').value = street.nombre_calle; // Solo el nombre
+                    suggestionsDiv.innerHTML = '';
+                };
+                suggestionsDiv.appendChild(suggestion);
+            });
+        }
+    }
+}
+
+
+
+    function showDeliveryOptions() {
+        document.getElementById('delivery-options').classList.remove('hidden');
+        document.getElementById('pickup-options').classList.add('hidden');
+    }
+
+    function showPickupOptions() {
+        document.getElementById('pickup-options').classList.remove('hidden');
+        document.getElementById('delivery-options').classList.add('hidden');
+    }
+
+    function saveToLocalStorage() {
+        const isDelivery = document.getElementById('realizar-pedido').checked;
+        const isPickup = document.getElementById('recoger-pedido').checked;
+
+        const deliveryDetails = {
+            type: isDelivery ? "Realizar Pedido" : isPickup ? "Recoger Pedido" : "",
+            locality: isDelivery ? document.getElementById('locality').value : "",
+            address: isDelivery ? document.getElementById('address').value : "",
+            schedule: isPickup ? document.getElementById('schedule').value : ""
+        };
+
+        // Validaciones antes de guardar
+        if (!deliveryDetails.type) {
+            alert("Por favor selecciona una opción (Realizar o Recoger Pedido).");
+            return;
+        }
+
+        if (isDelivery && (!deliveryDetails.locality || !deliveryDetails.address)) {
+            alert("Por favor completa todos los campos de la dirección.");
+            return;
+        }
+
+        if (isPickup && !deliveryDetails.schedule) {
+            alert("Por favor selecciona un horario para recoger el pedido.");
+            return;
+        }
+
+        // Guardar en localStorage solo al presionar "Siguiente"
+        localStorage.setItem('pedido_detalles', JSON.stringify(deliveryDetails));
+
+        // Redirigir a la siguiente página
+        window.location.href = 'confirmacion_pago.php';
+    }
+</script>
+
+</body>
+</html>

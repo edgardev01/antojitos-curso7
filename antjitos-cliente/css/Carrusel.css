@@ -1,0 +1,506 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: black;
+    color: black;
+    font-size: 20px;
+}
+
+header {
+    background-color: white;
+    padding: 13px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+    
+}
+
+
+.logo {
+    width: 200px;
+    height: auto;
+    margin-right: 40px;
+}
+
+ul li img {
+    width: 40px;
+    height: 40px;
+}
+
+nav ul.menu-nav {
+    display: flex;
+    align-items: center;
+}
+
+nav ul.menu-nav li {
+    margin-right: 50px;
+    list-style: none;
+}
+
+nav ul.menu-nav li a {
+    color: black;
+    text-decoration: none;
+}
+
+nav ul.menu-nav li a:hover {
+    color: gray;
+}
+
+nav ul.menu-nav li button {
+    color: red;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+nav ul.menu-nav li button:hover {
+    color: darkred;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    padding: 10px 15px;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #9b8178;
+}
+
+ul li button {
+    background: none;
+    border: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    padding: 10px;
+    transition: background-color 0.3s, color 0.3s, text-decoration 0.3s;
+}
+
+ul li button:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+ul li button.active {
+    color: red;
+    text-decoration: underline;
+}
+.carousel-caption h2 {
+    position: relative;
+    animation: fadeIn 1s ease forwards;
+    opacity: 0;
+    color: red; /* Cambia a un color deseado (por ejemplo, un tono de rojo) */
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; top: 20px; }
+    100% { opacity: 1; top: 0; }
+}
+
+.carousel-container {
+    position: relative;
+    max-width: auto;
+    height: 450px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.carousel-slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.carousel-content {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.carousel-content.active {
+    display: flex;
+}
+
+.carousel-content img {
+    width: 350px;
+    height: auto;
+    margin-right: 42px;
+    border-radius: 8px;
+    image-rendering: -moz-crisp-edges; /* Firefox */
+    image-rendering: -o-crisp-edges; /* Opera */ 
+    image-rendering: -webkit-optimize-contrast; /* Webkit (Chrome, Safari) */ 
+    image-rendering: crisp-edges; /* CSS estándar */ 
+    image-rendering: pixelated;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.carousel-content img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+.carousel-caption {
+    margin-left: 55px;
+    width: 45%;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: left;
+    
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.carousel-button.left {
+    left: 5px;
+}
+
+.carousel-button.right {
+    right: 5px;
+}
+
+.carousel-button img {
+    width: 60px;
+    height: 54px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+.carousel-button img:hover {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.6));
+}
+
+.thumbnail-container {
+    position: relative;
+    display: flex;
+    bottom: -20px;
+    justify-content: center;
+    gap: 60px;
+    margin-top: 10px;
+}
+
+.thumbnail-container img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+}
+
+.thumbnail-container img:hover,
+.thumbnail-container img.active {
+    border-color: #ddd;
+}
+
+
+
+
+
+
+
+.menuProd li {
+    margin: 0 45px; /* Espacio entre los elementos del menú */
+   
+}
+
+nav ul {
+    color: white;
+    list-style-type: none; /* Elimina los puntos de la lista */
+    display: flex; /* Flexbox para alinear horizontalmente */
+    justify-content: center;
+
+}
+
+nav ul li {
+    margin-right: 20px; /* Espacio entre los elementos de la lista */
+}
+.menuu{
+    
+    background-color: #a40606;
+}
+
+.menu-section {
+    margin: 40px 20px;
+   
+}
+
+.menu-selected {
+    border-bottom: 2px solid #a40606; /* Color del subrayado */
+    color: #a40606; /* Color del texto cuando está seleccionado */
+}
+.menu-category h2 {
+    padding: 0;
+    font-size: 24px;
+    margin-bottom: 0px;
+    color: #a40606; /* Color del encabezado de la categoría */
+    border-bottom: 2px solid #ff5722; /* Línea debajo del encabezado */
+}
+
+.menu-items-container {
+    margin-left: -30px;
+    font-size: 10px; /* Reduce el tamaño de fuente de los ítems del menú */
+    display: flex; /* Flex para alinear horizontalmente */
+    flex-wrap: nowrap; /* No se permite que las líneas se rompan */
+    overflow-x: auto; /* Habilita el desplazamiento horizontal si es necesario */
+    gap: 15px; /* Espaciado entre los ítems */
+    padding: 10px 0; /* Reduce el padding vertical */
+}
+
+.menu-items-container:first {
+margin-left: -60px;
+}
+.menuProd li:first-child {
+    margin-left: 0; /* Elimina el margen izquierdo del primer producto */
+}
+.menu-item {
+    margin: 5px; /* Reduce el margen entre ítems */
+    padding: 10px 15px; /* Reduce el padding interno */
+    display: flex; /* Usar Flexbox para alinear elementos */
+    align-items: flex-start; /* Cambiar de center a flex-start para alinear arriba */
+
+    justify-content: space-between; 
+    width: 45%; /* Ajusta el ancho del ítem */
+    justify-content: space-between; /* Alinear texto a la izquierda */
+    overflow: hidden; 
+    padding-left: 0;
+     
+}
+
+
+
+.menu-item .product-img {
+    width: 140px;  /* Cambia el tamaño según lo necesites */
+    height: 140px; /* Ajusta a una altura específica */
+    object-fit: cover; /* Cubre el área del elemento, recortando si es necesario */
+     margin-bottom: 5px;
+     border-radius: 0; 
+}
+@media (max-width: 768px) {
+    .menu-item {
+        width: 45%; /* Aumenta el ancho en pantallas más pequeñas */
+    }
+}
+
+
+.menu-item input[type="checkbox"] {
+    width: 14px; /* Ajusta el ancho del checkbox */
+    height: 14px; /* Ajusta la altura del checkbox */
+}
+
+.menu-item label {
+    line-height: 1; /* Reduce el line-height */
+    font-size: 12px; /* Tamaño de letra reducido */
+    margin: 5px 0; /* Reduce el margen */
+}
+.menu-item input[type="checkbox"] {
+    margin-right: 5px; /* Espacio entre el checkbox y el texto */
+}
+
+.combobox-container select {
+    font-size: 10px; /* Tamaño de letra más pequeño */
+    padding: 3px; /* Reduce el padding */
+    border-radius: 4px; /* Mantiene el borde redondeado */
+    border: 1px solid #ccc; /* Borde gris claro */
+    width: 60px; /* Ancho reducido */
+    background-color: transparent;
+    color: white;
+}
+
+.menu-item img {
+    width: 50px; /* Ajusta el ancho de la imagen según lo desees */
+    height: auto; /* Mantiene la proporción de la imagen */
+    border-radius: 8px; /* Bordes redondeados */
+    margin-right: 0px; /* Espacio a la derecha de la imagen */
+}
+
+.menuProd li b {
+    cursor: pointer; /* Indica que es clicable */
+}
+
+
+
+.menu-item:hover {
+    transform: translateX(10px); /* Ampliación al pasar el mouse */
+
+ 
+}
+
+
+
+.item-info {
+    flex-direction: column;
+   
+}
+
+
+
+.item-info h3 {
+    font-size: 20px;
+    color: #a40606; /* Color del nombre del ítem */
+    line-height: 1.5; /* Altura de línea */
+    margin-bottom: 25px; /* Espacio debajo del h3 */
+}
+.item-info h4 {
+    font-size: 13px; /* Tamaño de letra reducido */
+    color: white;
+    margin-bottom: 1px;
+}
+/* Ocultar el fondo del checkbox */
+input[type="checkbox"] {
+    
+    appearance: none; /* Elimina el estilo predeterminado del checkbox */
+    width: 16px; /* Ajusta el ancho del checkbox */
+    height: 16px; /* Ajusta la altura del checkbox */
+    border: 2px solid white; /* Color del borde del checkbox */
+    border-radius: 4px; /* Bordes redondeados */
+    outline: none; /* Elimina el contorno predeterminado */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el checkbox */
+}
+
+/* Estilo para cuando el checkbox está seleccionado */
+input[type="checkbox"]:checked {
+    background-color: transparent; /* Asegura que no haya fondo */
+    border: 2px solid #ff5722; /* Mantiene el color del borde */
+}
+
+/* Estilo opcional para el cuadro del checkbox */
+input[type="checkbox"]:checked::after {
+    content: ''; /* Necesario para mostrar el checkmark */
+    display: block;
+    width: 10px; /* Ajusta el tamaño del checkmark */
+    height: 10px; /* Ajusta el tamaño del checkmark */
+     /* Espacio interno */
+    background-color: #ff5722; /* Color del checkmark */
+    border-radius: 2px; /* Bordes redondeados para el checkmark */
+}
+
+.menu-item input[type="checkbox"] {
+    margin-right: 2px; /* Espacio entre el checkbox y el texto */
+  
+}
+/* Reduce el tamaño de letra del checkbox */
+.menu-item label {
+    line-height: 3.5;
+    font-size: 14px; /* Tamaño de letra reducido */
+    align-items: center;
+    margin: 10px 0;
+    color: white;
+}
+
+/* Reduce el tamaño de letra de los combobox */
+.combobox-container {
+    margin-bottom: 1px;
+   
+    background-color: black;
+    color: white;
+    display: flex; /* Alinea los combobox en forma horizontal */
+    gap: 10px; /* Espaciado entre cada combobox */
+}
+
+.combobox-container select {
+    font-size: 12px; /* Tamaño de letra reducido */
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 80px; /* Ancho reducido */
+    background-color: transparent;
+    color: white;
+}
+/* Reduce el tamaño de letra del precio */
+
+img[src*="Img/Mas.png"] {
+    margin-right: 2px;
+    width: 20px; /* Ajusta este valor según el tamaño deseado */
+    height: auto; /* Mantiene la proporción original de la imagen */
+    cursor: pointer; /* Cambia el cursor al pasar sobre la imagen */
+}
+input[type="text"] {
+    width: 60px; /* Ajusta el ancho del campo */
+    font-size: 14px; /* Tamaño de letra */
+    padding: 5px; /* Espaciado interno */
+    border-radius: 4px; /* Bordes redondeados */
+    border: 1px solid #ccc; /* Borde gris claro */
+    text-align: center; /* Centra el texto */
+    background-color: transparent; /* Fondo transparente */
+    color: white;
+}
+
+input[type="text"]:focus {
+    border-color: #ff5722; /* Cambia el color del borde al enfocar */
+    outline: none; /* Elimina el contorno predeterminado */
+}
+
+
+img[src*="Img/Menos.png"] {
+    margin-right: 2px;
+    width: 20px; /* Ajusta este valor según el tamaño deseado */
+    height: auto; /* Mantiene la proporción original de la imagen */
+    cursor: pointer; /* Cambia el cursor al pasar sobre la imagen */
+}
+
+/* Si el precio está en otro elemento, ajusta también aquí */
+.item-info .price {
+    margin-bottom: 10px;
+    font-size: 12px; /* Tamaño reducido para el precio */
+    color: white; /* Aseguramos que el color sea consistente */
+    margin-top: 5px; /* Espaciado adecuado */
+}
+
+button.add-to-cart {
+    padding: 5px 10px;
+    background-color: rgb(133, 9, 9); /* Color de fondo */
+    color: white; /* Color del texto */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s; /* Transición suave */
+}
+/* GRIGAS *//* GRIGAS */
+/* GRIGAS *//* GRIGAS */
+.checkboxes label {
+    line-height: 1; /* Ajusta este valor según el espaciado que desees */
+    margin-bottom: 5px; /* Puedes reducir también el margen inferior */
+    gap: 5px;
+}
+
+
+.combobox-container {
+    margin-bottom: 3px; /* Espacio debajo del combobox */
+}
+
+button.add-to-cart:hover {
+    background-color: #010000; /* Color más oscuro al pasar el mouse */
+}
+.button-highlight {
+    background-color: #ff9800; /* Cambia el color del fondo del botón al resaltar */
+    color: white; /* Cambia el color del texto */
+    border: 2px solid #ff5722; /* Añade un borde de otro color */
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+
+
+
+

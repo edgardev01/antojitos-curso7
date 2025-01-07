@@ -1,0 +1,325 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #121212;
+    color: #f4f4f4;
+    line-height: 1.6;
+}
+
+header {
+    background-color: white;
+    padding: 13px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+    
+}
+
+
+.logo {
+    width: 200px;
+    height: auto;
+    margin-right: 40px;
+}
+
+ul li img {
+    width: 40px;
+    height: 40px;
+}
+
+nav ul.menu-nav {
+    display: flex;
+    align-items: center;
+}
+
+nav ul.menu-nav li {
+    margin-right: 50px;
+    list-style: none;
+}
+
+nav ul.menu-nav li a {
+    color: black;
+    text-decoration: none;
+}
+
+nav ul.menu-nav li a:hover {
+    color: gray;
+}
+
+nav ul.menu-nav li button {
+    color: red;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+nav ul.menu-nav li button:hover {
+    color: darkred;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    padding: 10px 15px;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #9b8178;
+}
+
+ul li button {
+    background: none;
+    border: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    padding: 10px;
+    transition: background-color 0.3s, color 0.3s, text-decoration 0.3s;
+}
+
+ul li button:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+ul li button.active {
+    color: red;
+    text-decoration: underline;
+}
+.BtnNav {
+    
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s ease;
+}
+
+.BtnNav img {
+    width: 20px;
+    height: 20px;
+}
+
+.BtnNav:hover {
+transform: scale(1.1);
+}
+ul li img {
+    width: 40px;
+    height: 40px;
+}
+.Encabezado {
+    background-color: red;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.Encabezado h1, .Encabezado h2 {
+    cursor: pointer;
+    margin: 0;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+.menu-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* NO modificar esto ya que iran tres columnas por fila */
+
+    gap: 20px;
+    padding: 30px;
+}
+
+.menu-item {
+width: 200px; ;
+background-color: #1c1c1c;
+border: 2px solid white; 
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: space-between;
+padding: 20px;
+gap: 15px;
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+overflow: hidden;
+box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); 
+}
+
+.menu-item:hover {
+transform: scale(1.05); /* Efecto de zoom al pasar el ratón */
+box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8); /* Aumenta la sombra en hover para hacerlo más atractivo */
+}
+
+.menu-item img {
+width: 100%;
+max-width: 180px; /* Tamaño de la imagen ajustado para mejor proporción */
+height: auto;
+border-radius: 8px;
+margin-bottom: 10px;
+object-fit: cover; 
+}
+
+.menu-item h3 {
+font-size: 18px;
+color: #f4f4f4; 
+text-align: center;
+margin-bottom: 10px;
+font-weight: 600; 
+}
+
+.menu-item .Ver {
+background-color: white !important;  
+color: #121212; 
+padding: 10px 20px;
+font-size: 16px;
+border: none;
+border-radius: 5px;
+font-weight: bold;
+cursor: pointer;
+transition: background-color 0.3s ease, transform 0.2s;
+text-align: center;
+}
+
+.menu-item .Ver:hover {
+background-color: #e76f51; /* Rojo más intenso en hover */
+transform: scale(1.1);
+}
+
+.menu-item .Ver:focus {
+outline: none; /* Elimina el borde al hacer clic */
+}
+
+#modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+#modal.show {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background-color: #1e1e1e !important;
+    padding: 20px;
+    border: 2px solid #333;
+    border-radius: 12px;
+    width: 40%;
+    height: 90%;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    color: #f4f4f4;
+}
+
+.contenidoTacos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.contenidoTacos img {
+    width: 150px;
+    height: auto;
+    border: 2px solid #444;
+    border-radius: 8px;
+}
+
+.details {
+    flex: 1;
+    width: 20%;
+    max-width: 180px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #2a2a2a;
+    color: #f4f4f4;
+    font-size: 14px;
+    text-align: left;
+}
+
+.details h2, .details h3 {
+    margin: 8px 0;
+    font-size: 12px;
+}
+#precio-taco {
+font-size: 16px;
+font-weight: bold;
+margin: 10px 0;
+color: white;
+}
+
+.Letra {
+    margin-bottom: 80px;
+}
+.close-button {
+    background-color: white !important;
+    color: #121212;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 180px !important;
+}
+
+.close-button:hover {
+    background-color: #e76f51;
+}
+
+.ingredientes p {
+    font-size: 16px;
+    color: #f4f4f4;
+}
+
+.ingredientes {
+    margin-top: 20px;
+}
+
+
+.menu-item.placeholder {
+    visibility: hidden;
+}
+#Ingredientes-Fila {
+    display: grid;
+    gap: 10px;
+    margin-top: 5px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    }
+    
+    #Fila {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(3, 1fr); /* Tres columnas de igual tamaño */
+    }
+    
+    #Primera-columna, #Segunda-columna, #Tercera-columna {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 3px !important;
+    border: 1px solid #ccc !important;
+    }

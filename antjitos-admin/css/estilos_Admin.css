@@ -1,0 +1,411 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    background-color: rgb(66, 65, 65);
+    overflow: hidden; /* Evita que contenido adicional desplace elementos */
+}
+
+/* Contenedor principal */
+.container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    margin-top: -8px;
+}
+
+/* Header (horizontal completo) */
+header {
+    width: 100%;
+    background-color: white;
+    color: black;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+}
+
+.main-content {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+
+.sidebar {
+    width: 200px;
+    background-color: rgb(173, 28, 28);
+    color: white;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: calc(100vh - 60px);
+    position: sticky;
+    top: 60px;
+    overflow-y: auto;
+}
+
+#logo {
+    width: 150px;
+    height: auto;
+    margin-right: 20px;
+}
+
+
+.content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #f5f5f5;
+    overflow-y: auto;
+}
+
+
+.sidebar button {
+    width: 100%;
+    margin-top: 5px;
+    padding: 10px;
+    background-color: #f4f4f4;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar button:hover {
+    background-color: #e0e0e0;
+}
+
+.sidebar button:focus {
+    background-color: #d1d1d1;
+    color: #333;
+}
+
+/* Línea divisoria en la sidebar */
+.divider {
+    width: 80%;
+    height: 2px;
+    background-color: #ffffff;
+    margin: 10px 0;
+}
+
+/* Estilos de los cuadros de configuración */
+.config-boxes {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.config-box {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background-color: #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.config-box:hover {
+    background-color: #c0c0c0;
+}
+
+.config-box img {
+    width: 50px;
+    height: 50px;
+    margin-right: 15px;
+}
+
+/* Estilo del buscador */
+.search-bar {
+    background-color: #333;
+    display: flex;
+    color: grey;
+    align-items: center;
+    gap: 10px;
+    margin-top: -3%;
+    margin-left: -2%;
+    margin-right: -2%;
+    height: 65px;
+}
+
+.search-bar input[type="text"] {
+    color: grey;
+    margin-top: 1%;
+    margin-left: 1%;
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Estilo del botón "Nuevo Producto" */
+.search-bar button {
+    padding: 5px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.search-bar button:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+.search-bar button:active {
+    background-color: #1e7e34;
+    transform: translateY(1px);
+}
+
+.Tacha {
+    width: 30px;
+    height: 30px;
+    margin-left: -4%;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.Tacha:hover {
+    transform: scale(1.2);
+    opacity: 0.8;
+}
+
+.Paso {
+    font-size: 12px;
+    margin-top: -1%;
+    margin-bottom: 5px;
+    margin-left: 30px;
+    color: #333;
+}
+
+.instruciones {
+    margin-left: 20px;
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 1%;
+    font-style: italic;
+    padding: 10px;
+}
+
+.nav-buttons {
+    margin-top: -2%;
+    display: flex;
+    justify-content: space-between; /* Mantiene los botones en los extremos */
+    align-items: center; /* Alinea verticalmente */
+    width: 100%;
+    padding: 0 20px; /* Ajusta según sea necesario */
+    gap: 20px; /* Espaciado uniforme entre los elementos */
+}
+
+.nav-buttons .left-buttons {
+    display: flex;
+    justify-content: flex-start; /* Alineación a la izquierda */
+    gap: 10px; /* Espaciado entre los botones en esta sección */
+    flex-grow: 1; /* Ocupa el espacio restante */
+}
+
+.nav-buttons .right-buttons {
+    display: flex;
+    justify-content: flex-end; /* Alineación a la derecha */
+    gap: 10px; /* Espaciado entre los botones en esta sección */
+}
+
+.BotCarr {
+    margin-left: -5%;
+    margin-right: -8%;
+    margin-bottom: 1%;
+    border: none;
+    width: 120px;
+    height: 40px;
+    color: white;
+    background-color: #333;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s ease;
+}
+
+.BotCarr:hover {
+    background-color: #CC0000;
+    transform: scale(1.05);
+}
+
+/* Contenedores activos */
+.carousel-container {
+    align-items: center;
+    margin-top: 15px;
+    background-color: white;
+    width: 90%;
+    height: 350px;
+    display: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.10); /* Sombra más suave */
+    padding: 20px;
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+    overflow: hidden; /* Evita que contenido adicional desplace elementos */
+}
+
+.carousel-container.active {
+    display: block;
+}
+
+#image-container {
+    width: 200px;
+    height: 200px;
+    border: 2px dashed #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 20px auto;
+}
+
+#image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    display: none;
+}
+
+/*Container 2*/
+/* Estilos generales para container2 */
+/* Estilos generales para container2 */
+
+#container1 input {
+margin-bottom: 12px;/* Permite que los elementos se envuelvan */
+
+}
+
+
+#container1 input[type="text"], 
+#container1 input[type="number"] {
+padding: 10px;
+border-radius: 2px;
+font-size: 1rem;
+width: calc(50% - 10px); /* Dos elementos por fila con espacio entre ellos */
+box-sizing: border-box;
+transition: border-color 0.3s ease;
+}
+
+/* Estilos para los campos cuando están en foco */
+#container2 input[type="text"]:focus, 
+#container2 input[type="number"]:focus {
+border-color: #007BFF;
+outline: none;
+flex: 0 0 4;
+}
+
+/* Estilo para los campos de "Número máximo" */
+#container2 input#product-max {
+width: 50%; 
+}
+
+#container2 input {
+margin-bottom: 10px;
+}
+
+#container2 label {
+font-size: 1rem;
+color: #555;
+}
+
+/* Para que los inputs se alineen de dos en dos en una fila */
+#container1 input[type="text"], 
+#container1 input[type="number"] {
+flex: 0 0 48%; /* 48% de ancho con espacio entre los inputs */
+}
+
+
+
+/* Contenedor principal de container3 */
+.container3 {
+display: flex;
+flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
+gap: 10px; 
+}
+
+
+.container3 .botones {
+display: flex;
+justify-content: flex-end; 
+gap: 10px; 
+}
+
+
+.datos {
+text-align: left; /* Alineación del texto al inicio */
+margin: 0; /* Margen ajustado */
+padding: 0; /* Sin relleno extra */
+}
+
+
+.draggable-container {
+width: 100%;
+padding: 10px;
+border: 1px solid #ccc;
+margin-bottom: 10px;
+cursor: move; 
+box-sizing: border-box; 
+}
+
+.dragging {
+opacity: 0.5; 
+}
+
+#Ingredientes-Fila {
+display: grid;
+gap: 10px;
+margin-top: 5px;
+grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+}
+
+#Fila {
+display: grid;
+gap: 10px;
+grid-template-columns: repeat(3, 1fr); /* Tres columnas de igual tamaño */
+}
+
+#Primera-columna, #Segunda-columna, #Tercera-columna {
+display: flex;
+flex-direction: column;
+gap: 10px;
+padding: 3px;
+border: 1px solid #ccc;
+}
+
+select {
+width: 100%;
+font-size: 12px;
+box-sizing: border-box;
+}
+
+/* Ocultar productList por defecto */
+#productList {
+    display: none;
+}
+
+/* Mostrar cuando sea necesario */
+#productList.visible {
+    display: block;
+}
