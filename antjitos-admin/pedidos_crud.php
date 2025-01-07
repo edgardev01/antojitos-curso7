@@ -10,14 +10,25 @@ if (isset($_POST['create'])) {
     $categoria = $_POST['categoria'];
     $id_cliente = $_POST['id_cliente'];
 
-    $sql = "INSERT INTO pedidos (estado, nombre_producto, cantidad, precio, categoria, id_cliente) VALUES (?, ?, ?, ?, ?, ?)";
+    // Insertar en tabla pedidos
+    $sql = "INSERT INTO pedidos (estado, id_cliente) VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->execute([$estado, $nombre_producto, $cantidad, $precio, $categoria, $id_cliente]);
+    $stmt->execute([$estado, $id_cliente]);
+
+    // Obtener el último ID insertado en la tabla pedidos
+    $id_pedido = $conn->lastInsertId();
+
+    // Insertar en tabla detalle_pedido
+    $sql = "INSERT INTO detalle_pedido (id_pedido, nombre_producto, cantidad, precio, categoria) VALUES (?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$id_pedido, $nombre_producto, $cantidad, $precio, $categoria]);
 }
 
 // Eliminar Pedido
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
+
+    // Eliminar de la tabla pedidos (se elimina en cascada el detalle)
     $sql = "DELETE FROM pedidos WHERE id_pedido = ?";
     $stmt = $conn->prepare($sql);
     $stmt->execute([$id]);
@@ -27,7 +38,14 @@ if (isset($_GET['delete'])) {
 $updateData = null;
 if (isset($_GET['edit'])) {
     $id = $_GET['edit'];
-    $stmt = $conn->prepare("SELECT * FROM pedidos WHERE id_pedido = ?");
+
+    // Unir pedidos con detalle_pedido para editar
+    $stmt = $conn->prepare("
+        SELECT p.id_pedido, p.estado, p.id_cliente, dp.nombre_producto, dp.cantidad, dp.precio, dp.categoria
+        FROM pedidos p
+        LEFT JOIN detalle_pedido dp ON p.id_pedido = dp.id_pedido
+        WHERE p.id_pedido = ?
+    ");
     $stmt->execute([$id]);
     $updateData = $stmt->fetch(PDO::FETCH_ASSOC);
 }
@@ -42,15 +60,28 @@ if (isset($_POST['update'])) {
     $categoria = $_POST['categoria'];
     $id_cliente = $_POST['id_cliente'];
 
-    $sql = "UPDATE pedidos SET estado = ?, nombre_producto = ?, cantidad = ?, precio = ?, categoria = ?, id_cliente = ? WHERE id_pedido = ?";
+    // Actualizar la tabla pedidos
+    $sql = "UPDATE pedidos SET estado = ?, id_cliente = ? WHERE id_pedido = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->execute([$estado, $nombre_producto, $cantidad, $precio, $categoria, $id_cliente, $id]);
+    $stmt->execute([$estado, $id_cliente, $id]);
+
+    // Actualizar la tabla detalle_pedido
+    $sql = "UPDATE detalle_pedido SET nombre_producto = ?, cantidad = ?, precio = ?, categoria = ? WHERE id_pedido = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$nombre_producto, $cantidad, $precio, $categoria, $id]);
+
     header("Location: pedidos_crud.php");
     exit;
 }
 
-// Leer Pedidos
-$result = $conn->query("SELECT * FROM pedidos");
+// Leer Pedidos con detalle
+$result = $conn->query("
+    SELECT 
+        p.id_pedido, p.fecha_hora, p.estado, p.id_cliente, 
+        dp.nombre_producto, dp.cantidad, dp.precio, dp.categoria
+    FROM pedidos p
+    LEFT JOIN detalle_pedido dp ON p.id_pedido = dp.id_pedido
+");
 ?>
 
 <!DOCTYPE html>
@@ -174,8 +205,6 @@ $result = $conn->query("SELECT * FROM pedidos");
 
     <!-- Botón para volver al Dashboard -->
     <a href="dashboard.html" class="dashboard-button">Volver al Dashboard</a>
-
-    <!-- Formulario Crear/Actualizar Pedido -->
     <div class="form-container">
         <form method="POST">
             <?php if ($updateData): ?>
@@ -208,6 +237,7 @@ $result = $conn->query("SELECT * FROM pedidos");
     </div>
 
     <!-- Tabla de Pedidos -->
+   
     <table>
         <tr>
             <th>ID</th>
@@ -222,14 +252,14 @@ $result = $conn->query("SELECT * FROM pedidos");
         </tr>
         <?php while ($row = $result->fetch(PDO::FETCH_ASSOC)): ?>
             <tr>
-                <td><?= $row['id_pedido'] ?></td>
-                <td><?= $row['fecha_hora'] ?></td>
-                <td><?= $row['estado'] ?></td>
-                <td><?= $row['nombre_producto'] ?></td>
-                <td><?= $row['cantidad'] ?></td>
-                <td><?= $row['precio'] ?></td>
-                <td><?= $row['categoria'] ?></td>
-                <td><?= $row['id_cliente'] ?></td>
+                <td><?= htmlspecialchars($row['id_pedido']) ?></td>
+                <td><?= htmlspecialchars($row['fecha_hora']) ?></td>
+                <td><?= htmlspecialchars($row['estado']) ?></td>
+                <td><?= isset($row['nombre_producto']) ? htmlspecialchars($row['nombre_producto']) : 'N/A' ?></td>
+                <td><?= isset($row['cantidad']) ? htmlspecialchars($row['cantidad']) : 'N/A' ?></td>
+                <td><?= isset($row['precio']) ? htmlspecialchars($row['precio']) : 'N/A' ?></td>
+                <td><?= isset($row['categoria']) ? htmlspecialchars($row['categoria']) : 'N/A' ?></td>
+                <td><?= htmlspecialchars($row['id_cliente']) ?></td>
                 <td>
                     <a href="?edit=<?= $row['id_pedido'] ?>">Editar</a>
                     <a href="?delete=<?= $row['id_pedido'] ?>" onclick="return confirm('¿Estás seguro de eliminar este pedido?');">Eliminar</a>

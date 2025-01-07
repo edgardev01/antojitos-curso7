@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-01-2025 a las 20:21:48
+-- Tiempo de generación: 07-01-2025 a las 23:27:09
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -25,7 +25,7 @@ DELIMITER $$
 --
 -- Procedimientos
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `crearCuentaUsuario` (IN `nombre` VARCHAR(255), IN `apellido` VARCHAR(255), IN `correo_electronico` VARCHAR(255), IN `password` VARCHAR(255))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `crearCuentaUsuario` (IN `nombre` VARCHAR(255), IN `apellido` VARCHAR(255), IN `correo_electronico_param` VARCHAR(255), IN `password` VARCHAR(255))   BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         ROLLBACK;
@@ -35,16 +35,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `crearCuentaUsuario` (IN `nombre` VA
     START TRANSACTION;
 
     -- Verificar si el correo electrónico ya está en uso
-    IF EXISTS (SELECT 1 FROM usuarios WHERE correo_electronico = correo_electronico) 
-    THEN
-        SIGNAL SQLSTATE '45000' 
+    IF EXISTS (SELECT 1 FROM usuarios WHERE correo_electronico = correo_electronico_param) THEN
+        SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'El correo electrónico ya está en uso';
         ROLLBACK;
     ELSE
         INSERT INTO usuarios (nombre, apellido, correo_electronico, password) 
-        VALUES (nombre, apellido, correo_electronico, password);
+        VALUES (nombre, apellido, correo_electronico_param, password);
         COMMIT;
     END IF;
+
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `iniciarSesion` (IN `correo` VARCHAR(255), IN `contrasena` VARCHAR(255))   BEGIN
@@ -331,6 +331,14 @@ CREATE TABLE `detalle_pagos` (
   `horario_retiro` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `detalle_pagos`
+--
+
+INSERT INTO `detalle_pagos` (`id_detalle_pago`, `id_pago`, `id_pedido`, `referencia`, `fecha_hora`, `comprobante_pago`, `localidad`, `direccion_exacta`, `horario_retiro`) VALUES
+(26, 27, 17362, 'Sin referencia', '2025-01-07 21:44:00', 'Sin comprobante', '1', 'Calle 1', 'No especificado'),
+(27, 27, 17362, 'Sin referencia', '2025-01-07 21:44:00', 'Sin comprobante', '1', 'Calle 1', 'No especificado');
+
 -- --------------------------------------------------------
 
 --
@@ -352,9 +360,8 @@ CREATE TABLE `detalle_pedido` (
 --
 
 INSERT INTO `detalle_pedido` (`id_detalle`, `id_pedido`, `producto_id`, `nombre_producto`, `cantidad`, `precio`, `categoria`) VALUES
-(1, 1, 4, 'Pepsi', 1, 9.00, 'Bebida'),
-(2, 1, 1, 'Taco de suadero', 1, 9.00, 'Taco'),
-(3, 1, 2, 'Huarache longaniza', 1, 9.00, 'Huarache');
+(1, 17362, 1, 'Taco de suadero', 1, 9.00, 'Taco'),
+(2, 17362, 2, 'Huarache longaniza', 1, 9.00, 'Huarache');
 
 -- --------------------------------------------------------
 
@@ -372,7 +379,8 @@ CREATE TABLE `estado_inicio` (
 --
 
 INSERT INTO `estado_inicio` (`usuario_id`, `ultimo_inicio`) VALUES
-(1, '2024-12-17 13:39:55');
+(1, '2024-12-17 13:39:55'),
+(2, '2025-01-07 16:16:54');
 
 --
 -- Disparadores `estado_inicio`
@@ -469,7 +477,8 @@ CREATE TABLE `logs_sesion` (
 --
 
 INSERT INTO `logs_sesion` (`id`, `usuario_id`, `fecha_hora`) VALUES
-(1, 1, '2024-12-17 13:39:55');
+(1, 1, '2024-12-17 13:39:55'),
+(5, 2, '2025-01-07 16:16:54');
 
 --
 -- Disparadores `logs_sesion`
@@ -569,7 +578,7 @@ CREATE TABLE `pagos` (
 --
 
 INSERT INTO `pagos` (`id_pago`, `id_cliente`, `total`, `fecha_pago`, `estado`, `id_pedido`) VALUES
-(1, 1, 9.00, '2025-01-07 19:03:39', 'Completado', 1);
+(27, 1, 18.00, '2025-01-07 21:44:00', 'Completado', 17362);
 
 -- --------------------------------------------------------
 
@@ -589,7 +598,7 @@ CREATE TABLE `pedidos` (
 --
 
 INSERT INTO `pedidos` (`id_pedido`, `fecha_hora`, `estado`, `id_cliente`) VALUES
-(1, '2024-12-19 22:22:44', 'Confirmado', 1);
+(17362, '2025-01-07 21:44:00', 'Confirmado', 1);
 
 -- --------------------------------------------------------
 
@@ -704,7 +713,8 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `correo_electronico`, `password`) VALUES
-(1, 'Juan', 'Pérez', 'juan.perez@example.com', 'Password123!');
+(1, 'Juan', 'Pérez', 'juan.perez@example.com', 'Password123!'),
+(2, 'test33', 'test33', 'test33@gmail.com', 'Password123!');
 
 --
 -- Disparadores `usuarios`
@@ -946,7 +956,7 @@ ALTER TABLE `combobox`
 -- AUTO_INCREMENT de la tabla `detalle_pagos`
 --
 ALTER TABLE `detalle_pagos`
-  MODIFY `id_detalle_pago` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detalle_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_pedido`
@@ -970,7 +980,7 @@ ALTER TABLE `localidades`
 -- AUTO_INCREMENT de la tabla `logs_sesion`
 --
 ALTER TABLE `logs_sesion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `logs_sesion_clientes`
@@ -982,13 +992,13 @@ ALTER TABLE `logs_sesion_clientes`
 -- AUTO_INCREMENT de la tabla `pagos`
 --
 ALTER TABLE `pagos`
-  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2147483648;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
@@ -1018,7 +1028,7 @@ ALTER TABLE `tipo_producto`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `volumenes`
